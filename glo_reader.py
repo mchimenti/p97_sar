@@ -17,7 +17,12 @@ cmpd_smiles = cmpd[['SMILES','SMDC']]
 cmpd_final = merge(cmpd_mean, cmpd_smiles, on='SMDC')
 cmpd_final = cmpd_final[cmpd_final["SMDC"] != cmpd_final["SMDC"].shift()]  ##delete identical rows
 
+##clean up final dataframe
+
 cmpd_final.drop((u'SMDC', u''), axis=1, inplace=True)
 cmpd_final.reset_index(drop=True, inplace=True)
+cmpd_final.columns = ['SMDC','GLO_average', 'GLO_std', 'SMILES']
 
-cmpd_final.to_csv('./cmpd_out.csv')
+##write to file
+
+cmpd_final.to_csv('./cmpd_out.csv', index=False)
